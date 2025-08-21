@@ -2714,6 +2714,87 @@ body {
         height: 300px !important;
     }
     
+    /* Mobile main container - remove gray background and center content */
+    .main-container {
+        background: white !important;
+        border-radius: 0 !important;
+        padding: 1rem !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+    
+    /* Mobile content left - center alignment */
+    .content-left {
+        padding-right: 0 !important;
+        text-align: center !important;
+    }
+    
+    /* Mobile breadcrumbs - center alignment */
+    .breadcrumbs {
+        justify-content: center !important;
+        text-align: center !important;
+    }
+    
+    /* Mobile listing title - center alignment */
+    .listing-title {
+        text-align: center !important;
+    }
+    
+    /* Mobile key features - center alignment */
+    .key-features {
+        justify-content: center !important;
+    }
+    
+    /* Mobile van description - center alignment */
+    .van-description h2 {
+        text-align: center !important;
+    }
+    
+    /* Mobile van tags - center alignment */
+    .van-tags {
+        justify-content: center !important;
+    }
+    
+    /* Mobile description text - center alignment */
+    .description-text {
+        text-align: center !important;
+    }
+    
+    /* Mobile features section - center alignment */
+    .features-section h3 {
+        text-align: center !important;
+    }
+    
+    /* Mobile amenities section - center alignment */
+    .amenities-section h3 {
+        text-align: center !important;
+    }
+    
+    /* Mobile availability section - center alignment */
+    .availability-section h3 {
+        text-align: center !important;
+    }
+    
+    /* Mobile minimum stay - center alignment */
+    .minimum-stay {
+        justify-content: center !important;
+        text-align: center !important;
+    }
+    
+    /* Mobile discounts - center alignment */
+    .discounts h4 {
+        text-align: center !important;
+    }
+    
+    .discounts ul {
+        text-align: center !important;
+    }
+    
+    /* Mobile mobile map section - center alignment */
+    .mobile-map-section h3 {
+        text-align: center !important;
+    }
+    
     /* Mobile map container - match image height */
     .map-container {
         height: 250px !important;
