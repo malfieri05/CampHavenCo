@@ -2656,7 +2656,19 @@ body {
 }
 
 /* Mobile Optimization - DO NOT change any existing desktop styles */
+
+/* Hide mobile map on desktop */
+.mobile-map-section {
+    display: none;
+}
+
 @media (max-width: 768px) {
+    /* Full width container on mobile */
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+    
     /* Stack layout vertically on mobile */
     .content-section .container {
         grid-template-columns: 1fr !important;
@@ -2669,6 +2681,12 @@ body {
         padding: 0 1rem !important;
     }
     
+    /* Keep nav-logo text on one line */
+    .nav-logo {
+        font-size: 1.2rem !important;
+        white-space: nowrap !important;
+    }
+    
     .nav-links {
         display: none !important;
     }
@@ -2677,47 +2695,39 @@ body {
         display: none !important;
     }
     
-    /* Mobile nav-logo - keep text on one line */
-    .nav-logo {
-        font-size: 1.2rem !important;
-        white-space: nowrap !important;
-    }
-    
-    /* Mobile main container - full width gray background */
-    .main-container {
-        max-width: 100% !important;
-        margin: 0 !important;
-        padding: 2rem 1rem !important;
-        border-radius: 0 !important;
-    }
-    
-    /* Mobile image gallery - make it bigger */
+    /* Mobile image gallery */
     .image-gallery {
-        height: 350px !important;
+        height: 250px !important;
         border-radius: 12px !important;
     }
     
-    /* Mobile main image container - stack vertically */
+    /* Mobile main image container - full width since map is hidden */
     .main-image-container {
         grid-template-columns: 1fr !important;
-        gap: 1rem !important;
+        gap: 0 !important;
+        padding: 0 1rem !important;
     }
     
-    /* Mobile main image - make it bigger */
+    /* Mobile main image - full width */
     .main-image {
-        height: 350px !important;
+        width: 100% !important;
+        height: 300px !important;
     }
     
-    /* Mobile image carousel - add spacing */
-    .thumbnail-carousel {
-        margin-bottom: 1rem !important;
-    }
-    
-    /* Mobile map container - shorter and wider, positioned below carousel */
+    /* Mobile map container - match image height */
     .map-container {
-        height: 180px !important;
+        height: 250px !important;
         border-radius: 12px !important;
-        margin-top: 1rem !important;
+    }
+    
+    /* Hide original map on mobile, show mobile map */
+    .map-container {
+        display: none !important;
+    }
+    
+    .mobile-map-section {
+        display: block !important;
+        margin-top: 2rem !important;
     }
     
     /* Mobile typography */
