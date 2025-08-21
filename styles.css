@@ -2657,6 +2657,14 @@ body {
 
 /* Mobile Optimization - DO NOT change any existing desktop styles */
 @media (max-width: 768px) {
+    /* Fix grey background edge - extend to screen edges */
+    .main-container {
+        padding: 3rem 0 !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+    
     /* Stack layout vertically on mobile */
     .content-section .container {
         grid-template-columns: 1fr !important;
@@ -2667,6 +2675,12 @@ body {
     /* Mobile header */
     .header .container {
         padding: 0 1rem !important;
+    }
+    
+    /* Prevent header text stacking */
+    .nav-logo {
+        white-space: nowrap !important;
+        font-size: 1.2rem !important;
     }
     
     .nav-links {
@@ -2773,6 +2787,11 @@ body {
     /* Extra small mobile adjustments */
     .container {
         padding: 0 0.75rem !important;
+    }
+    
+    /* Ensure grey background extends to edges on very small screens */
+    .main-container {
+        padding: 2rem 0 !important;
     }
     
     .luxury-title {
