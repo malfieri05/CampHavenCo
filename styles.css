@@ -162,6 +162,13 @@ body {
     justify-content: center;
 }
 
+.main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
 /* Map Container */
 .map-container {
     display: flex;
@@ -2438,31 +2445,67 @@ body {
         height: 35px;
     }
     
-    /* Main Content */
+    /* Main Content - Improved Layout */
     .main-container {
-        padding: 1rem;
-        gap: 1.5rem;
+        grid-template-columns: 1fr;
+        padding: 1.5rem 1rem;
+        gap: 2rem;
+        margin: 0 auto;
+        max-width: 100%;
+        border-radius: 12px;
+    }
+    
+    .content-left {
+        padding-right: 0;
+        text-align: center;
     }
     
     .listing-title {
         font-size: 1.4rem;
         line-height: 1.3;
+        text-align: center;
+        margin-bottom: 1rem;
     }
     
     .listing-description {
         font-size: 0.95rem;
-        line-height: 1.5;
+        line-height: 1.6;
+        text-align: center;
+        margin-bottom: 1.5rem;
     }
     
-    /* Image Gallery */
+    /* Image Gallery - Improved Symmetry */
+    .main-image-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0 1rem;
+        margin: 0 auto 1.5rem auto;
+    }
+    
     .main-image {
         height: 300px;
         border-radius: 12px;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    .map-container {
+        height: 250px;
+        margin: 1rem auto;
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    .map-title {
+        text-align: center;
+        margin-bottom: 1rem;
     }
     
     .thumbnail-carousel {
-        padding: 0 10px;
-        margin: 1rem 0;
+        padding: 0 1rem;
+        margin: 1.5rem auto;
+        max-width: 600px;
     }
     
     .thumbnail {
@@ -2480,22 +2523,41 @@ body {
         font-size: 0.8rem;
     }
     
-    /* Features & Amenities */
+    /* Features & Amenities - Improved Layout */
+    .features-section,
+    .amenities-section {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .features-section h3,
+    .amenities-section h3 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+    }
+    
     .features-grid,
     .amenities-grid {
         grid-template-columns: 1fr;
-        gap: 0.75rem;
+        gap: 1rem;
+        max-width: 500px;
+        margin: 0 auto;
     }
     
     .feature-item,
     .amenity-item {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        text-align: center;
+        justify-content: center;
     }
     
     .features-carousel,
     .amenities-carousel {
-        gap: 0.5rem;
+        gap: 0.75rem;
+        max-width: 500px;
+        margin: 0 auto;
     }
     
     .features-arrow,
@@ -2509,14 +2571,50 @@ body {
         font-size: 0.8rem;
     }
     
-    /* Booking Section */
-    .booking-container {
-        padding: 0 10px;
+    .features-dots,
+.amenities-dots {
+    text-align: center;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.features-dots .dot,
+.amenities-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.features-dots .dot.active,
+.amenities-dots .dot.active {
+    background: #4a7c59;
+    transform: scale(1.2);
+}
+    
+    /* Booking Section - Improved Centering */
+    .booking-sidebar {
+        position: static;
+        order: -1;
+        margin-bottom: 2rem;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .booking-card {
         padding: 1.5rem;
         border-radius: 12px;
+        text-align: center;
+    }
+    
+    .price {
+        text-align: center;
+        margin-bottom: 1.5rem;
     }
     
     .price .amount {
@@ -2527,33 +2625,41 @@ body {
         font-size: 0.9rem;
     }
     
-    /* Calendar */
+    .instant-book-btn {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+    
+    /* Calendar - Improved Layout */
     .calendar-container {
         padding: 1rem;
+        max-width: 500px;
+        margin: 0 auto;
     }
     
     .calendar-header {
         flex-direction: column;
         gap: 1rem;
         align-items: center;
+        text-align: center;
     }
     
     .calendar-grid {
         gap: 0.5rem;
+        justify-content: center;
     }
     
     .calendar-day {
         height: 40px;
         font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
-    /* Map */
-    .map-container {
-        height: 250px;
-        margin: 1rem 0;
-    }
-    
-    /* Footer */
+    /* Footer - Improved Centering */
     .footer {
         padding: 2rem 1rem;
         text-align: center;
@@ -2562,6 +2668,24 @@ body {
     .footer-content {
         flex-direction: column;
         gap: 1.5rem;
+        align-items: center;
+    }
+    
+    /* Key Features - Improved Layout */
+    .key-features {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        margin: 1.5rem 0;
+    }
+    
+    .key-features .feature {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        justify-content: center;
+        text-align: center;
     }
 }
 
@@ -2579,28 +2703,60 @@ body {
         height: 30px;
     }
     
-    /* Main Content */
+    /* Main Content - Enhanced Small Mobile Layout */
     .main-container {
-        padding: 0.75rem;
-        gap: 1rem;
+        padding: 1rem 0.75rem;
+        gap: 1.5rem;
+        border-radius: 8px;
+    }
+    
+    .content-left {
+        text-align: center;
     }
     
     .listing-title {
         font-size: 1.3rem;
+        text-align: center;
+        margin-bottom: 0.75rem;
     }
     
     .listing-description {
         font-size: 0.9rem;
+        text-align: center;
+        margin-bottom: 1rem;
     }
     
-    /* Image Gallery */
+    /* Image Gallery - Enhanced Small Mobile */
+    .main-image-container {
+        padding: 0 0.5rem;
+        gap: 0.75rem;
+    }
+    
     .main-image {
         height: 250px;
+        border-radius: 8px;
+        max-width: 100%;
+    }
+    
+    .map-container {
+        height: 200px;
+        max-width: 100%;
+    }
+    
+    .map-title {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .thumbnail-carousel {
+        padding: 0 0.5rem;
+        margin: 1rem auto;
     }
     
     .thumbnail {
         width: 70px;
         height: 50px;
+        border-radius: 6px;
     }
     
     .carousel-arrow {
@@ -2608,11 +2764,61 @@ body {
         height: 28px;
     }
     
-    /* Features & Amenities */
+    /* Features & Amenities - Enhanced Small Mobile */
+    .features-section,
+    .amenities-section {
+        margin-bottom: 1.5rem;
+    }
+    
+    .features-section h3,
+    .amenities-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+    
+    .features-grid,
+    .amenities-grid {
+        gap: 0.75rem;
+        max-width: 100%;
+    }
+    
     .feature-item,
     .amenity-item {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.8rem;
+        padding: 0.6rem 0.75rem;
+        font-size: 0.85rem;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .features-carousel,
+    .amenities-carousel {
+        gap: 0.5rem;
+        max-width: 100%;
+    }
+    
+    .features-dots,
+    .amenities-dots {
+        text-align: center;
+        margin-top: 0.75rem;
+        display: flex;
+        justify-content: center;
+        gap: 0.4rem;
+    }
+    
+    .features-dots .dot,
+    .amenities-dots .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .features-dots .dot.active,
+    .amenities-dots .dot.active {
+        background: #4a7c59;
+        transform: scale(1.2);
     }
     
     .features-arrow,
@@ -2621,9 +2827,21 @@ body {
         height: 30px;
     }
     
-    /* Booking */
+    /* Booking - Enhanced Small Mobile */
+    .booking-sidebar {
+        max-width: 100%;
+        margin: 0 auto 1.5rem auto;
+    }
+    
     .booking-card {
         padding: 1rem;
+        border-radius: 8px;
+        text-align: center;
+    }
+    
+    .price {
+        text-align: center;
+        margin-bottom: 1rem;
     }
     
     .price .amount {
@@ -2633,38 +2851,78 @@ body {
     .instant-book-btn {
         padding: 0.75rem 1.5rem;
         font-size: 1rem;
+        width: 100%;
+        max-width: 250px;
     }
     
-    /* Calendar */
+    /* Calendar - Enhanced Small Mobile */
+    .calendar-container {
+        padding: 0.75rem;
+        max-width: 100%;
+    }
+    
+    .calendar-header {
+        gap: 0.75rem;
+    }
+    
     .calendar-day {
         height: 35px;
         font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
-    /* Modal */
+    /* Key Features - Enhanced Small Mobile */
+    .key-features {
+        gap: 0.75rem;
+        margin: 1rem 0;
+    }
+    
+    .key-features .feature {
+        gap: 0.4rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Modal - Enhanced Small Mobile */
     .modal-content {
-        margin: 1rem;
-        padding: 1.5rem;
-        max-width: 95%;
+        margin: 0.5rem;
+        padding: 1.25rem;
+        max-width: 98%;
+        border-radius: 8px;
     }
     
     .modal-header h3 {
         font-size: 1.2rem;
+        text-align: center;
     }
     
     .form-group label {
         font-size: 0.9rem;
+        text-align: left;
     }
     
     .form-group input,
     .form-group textarea {
         padding: 0.75rem;
-        font-size: 0.9rem;
+        font-size: 16px; /* Prevents zoom on iOS */
+        border-radius: 6px;
     }
     
     .confirm-booking-btn {
         padding: 0.75rem 1.5rem;
         font-size: 1rem;
+        width: 100%;
+    }
+    
+    /* Footer - Enhanced Small Mobile */
+    .footer {
+        padding: 1.5rem 0.75rem;
+        text-align: center;
+    }
+    
+    .footer-content {
+        gap: 1rem;
     }
 }
 
