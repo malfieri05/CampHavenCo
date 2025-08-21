@@ -22,6 +22,10 @@
                 <li><a href="#van-details">Van Details</a></li>
                 <li><a href="#booking">Book Now</a></li>
             </ul>
+            <div class="header-phone">
+                <i class="fas fa-phone"></i>
+                <span>503-764-5097</span>
+            </div>
             <div class="hamburger">
                 <span></span>
                 <span></span>
@@ -29,6 +33,36 @@
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu">
+        <div class="mobile-nav-content">
+            <div class="mobile-nav-header">
+                <div class="mobile-nav-logo">
+                    <img src="Van - listing images/WhiteLogo.png" alt="Camp Haven Co Logo" class="logo-image">
+                    <span>Camp Haven Co</span>
+                </div>
+                <button class="mobile-nav-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <ul class="mobile-nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#van-details">Van Details</a></li>
+                <li><a href="#booking">Book Now</a></li>
+            </ul>
+            <div class="mobile-nav-phone">
+                <i class="fas fa-phone"></i>
+                <span>503-764-5097</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Floating Phone Button -->
+    <a href="tel:503-764-5097" class="mobile-phone-button">
+        <i class="fas fa-phone"></i>
+        <span>503-764-5097</span>
+    </a>
 
     <!-- Image Gallery Section -->
     <div class="image-gallery-section">
@@ -162,7 +196,6 @@
                                             <div class="feature-item">
                                                 <i class="fas fa-tint"></i>
                                                 <span>Fresh water: 30 gal</span>
-                                                <i class="fas fa-question-circle info-icon"></i>
                                             </div>
                                             <div class="feature-item">
                                                 <i class="fas fa-gas-pump"></i>
@@ -478,6 +511,7 @@
                                 <div class="calendar-header">
                                     <button class="calendar-nav" onclick="previousMonth()">‹</button>
                                     <h3 id="month1">August 2025</h3>
+                                    <button class="calendar-nav mobile-next" onclick="nextMonth()">›</button>
                                 </div>
                                 <div class="calendar-grid" id="calendar1"></div>
                             </div>
@@ -558,7 +592,7 @@
                         
                         <button type="submit" class="confirm-booking-btn">
                             <i class="fas fa-check"></i>
-                            Confirm Booking
+                            Submit Booking Request
                         </button>
                     </form>
                     

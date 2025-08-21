@@ -69,50 +69,32 @@ class HeroCarousel {
 
 // Mobile Navigation
 const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
+const mobileNavMenu = document.querySelector('.mobile-nav-menu');
+const mobileNavClose = document.querySelector('.mobile-nav-close');
 
 hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
+    mobileNavMenu.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+});
+
+mobileNavClose.addEventListener('click', () => {
+    mobileNavMenu.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Restore scrolling
 });
 
 // Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-menu a').forEach(link => {
+document.querySelectorAll('.mobile-nav-links a').forEach(link => {
     link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+        mobileNavMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
     });
 });
 
 // Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    }
-});
-
-// Prevent body scroll when mobile menu is open
-function toggleBodyScroll(disable) {
-    if (disable) {
-        document.body.style.overflow = 'hidden';
-    } else {
+mobileNavMenu.addEventListener('click', (e) => {
+    if (e.target === mobileNavMenu) {
+        mobileNavMenu.classList.remove('active');
         document.body.style.overflow = 'auto';
-    }
-}
-
-// Update mobile menu behavior
-hamburger.addEventListener('click', () => {
-    const isActive = hamburger.classList.contains('active');
-    toggleBodyScroll(isActive);
-});
-
-// Close mobile menu on escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-        toggleBodyScroll(false);
     }
 });
 
@@ -283,15 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Center the clicked thumbnail
             centerActiveThumbnail();
-        });
-        
-        // Add touch feedback for mobile
-        thumbnail.addEventListener('touchstart', function() {
-            this.style.transform = 'scale(0.95)';
-        });
-        
-        thumbnail.addEventListener('touchend', function() {
-            this.style.transform = 'scale(1)';
         });
     });
     
@@ -758,35 +731,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         prevBtn.addEventListener('click', prevSlide);
         nextBtn.addEventListener('click', nextSlide);
         
-        // Touch/swipe support for mobile
-        let startX = 0;
-        let endX = 0;
-        
-        const featuresContainer = document.querySelector('.features-container');
-        if (featuresContainer) {
-            featuresContainer.addEventListener('touchstart', (e) => {
-                startX = e.touches[0].clientX;
-            });
-            
-            featuresContainer.addEventListener('touchend', (e) => {
-                endX = e.changedTouches[0].clientX;
-                handleSwipe();
-            });
-        }
-        
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = startX - endX;
-            
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    nextSlide(); // Swipe left
-                } else {
-                    prevSlide(); // Swipe right
-                }
-            }
-        }
-        
         // Dot navigation
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
@@ -836,35 +780,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Event listeners
         amenitiesPrevBtn.addEventListener('click', prevAmenitySlide);
         amenitiesNextBtn.addEventListener('click', nextAmenitySlide);
-        
-        // Touch/swipe support for amenities carousel
-        let amenitiesStartX = 0;
-        let amenitiesEndX = 0;
-        
-        const amenitiesContainer = document.querySelector('.amenities-container');
-        if (amenitiesContainer) {
-            amenitiesContainer.addEventListener('touchstart', (e) => {
-                amenitiesStartX = e.touches[0].clientX;
-            });
-            
-            amenitiesContainer.addEventListener('touchend', (e) => {
-                amenitiesEndX = e.changedTouches[0].clientX;
-                handleAmenitiesSwipe();
-            });
-        }
-        
-        function handleAmenitiesSwipe() {
-            const swipeThreshold = 50;
-            const diff = amenitiesStartX - amenitiesEndX;
-            
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    nextAmenitySlide(); // Swipe left
-                } else {
-                    prevAmenitySlide(); // Swipe right
-                }
-            }
-        }
         
         // Dot navigation
         amenitiesDots.forEach((dot, index) => {
@@ -1092,6 +1007,9 @@ function selectDate(day, element, month, year) {
         element.classList.add('selected');
         updateBookingSummary();
     }
+    
+    // Show visual indicator for mobile cross-month selection
+    showMobileSelectionIndicator();
 }
 
 function hoverDate(day, month, year) {
@@ -1138,8 +1056,57 @@ function clearHoverRange() {
     });
 }
 
+function showMobileSelectionIndicator() {
+    // Clear any existing indicators
+    document.querySelectorAll('.mobile-selection-indicator').forEach(el => {
+        el.classList.remove('mobile-selection-indicator');
+    });
+    
+    // Show indicator for start date if it exists and we're in selection mode
+    if (startDate && !endDate) {
+        const days = document.querySelectorAll('.calendar-day:not(.header):not(.disabled)');
+        days.forEach(dayEl => {
+            const day = parseInt(dayEl.textContent);
+            if (isNaN(day)) return;
+            
+            // Get the calendar container to determine which month this day belongs to
+            const calendarContainer = dayEl.closest('.month-calendar');
+            const calendarId = calendarContainer.querySelector('.calendar-grid').id;
+            
+            let month, year;
+            if (calendarId === 'calendar1') {
+                month = currentMonth;
+                year = currentYear;
+            } else {
+                month = currentMonth + 1;
+                year = currentYear;
+                if (month > 11) {
+                    month = 0;
+                    year++;
+                }
+            }
+            
+            const dayDate = new Date(year, month, day);
+            
+            // If this day matches the start date, show it as selected
+            if (dayDate.getTime() === startDate.getTime()) {
+                dayEl.classList.add('selected');
+            }
+            // If this day is after the start date, show it as available for end date selection
+            else if (dayDate > startDate) {
+                dayEl.classList.add('available-for-end');
+            }
+        });
+    }
+}
+
 function highlightRange() {
     if (!startDate || !endDate) return;
+    
+    // Clear any available-for-end indicators since we now have a complete selection
+    document.querySelectorAll('.calendar-day.available-for-end').forEach(el => {
+        el.classList.remove('available-for-end');
+    });
     
     const days = document.querySelectorAll('.calendar-day:not(.header):not(.disabled)');
     days.forEach(dayEl => {
@@ -1171,75 +1138,112 @@ function highlightRange() {
 function clearSelection() {
     startDate = null;
     endDate = null;
-    document.querySelectorAll('.calendar-day.selected, .calendar-day.in-range').forEach(el => {
-        el.classList.remove('selected', 'in-range');
+    document.querySelectorAll('.calendar-day.selected, .calendar-day.in-range, .calendar-day.available-for-end').forEach(el => {
+        el.classList.remove('selected', 'in-range', 'available-for-end');
     });
 }
 
 function updateBookingSummary() {
-    if (!startDate || !endDate) return;
-    
-    const nights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-    let totalPrice = nights * 227;
-    let discount = 0;
-    let discountText = '';
-    
-    // Apply discounts
-    if (nights >= 28) {
-        discount = 0.15;
-        discountText = '15% off for monthly stays (28+ nights)';
-    } else if (nights >= 7) {
-        discount = 0.07;
-        discountText = '7% off for weekly stays (7+ nights)';
-    }
-    
-    const discountAmount = totalPrice * discount;
-    const finalPrice = totalPrice - discountAmount;
-    
     // Update the sidebar dates section
     const dateDisplay = document.getElementById('dateDisplay');
     if (dateDisplay) {
-        dateDisplay.innerHTML = `
-            <span>${startDate.toLocaleDateString()} → ${endDate.toLocaleDateString()}</span>
-            <i class="fas fa-chevron-right"></i>
-        `;
+        if (startDate && endDate) {
+            // Complete selection
+            const nights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+            let totalPrice = nights * 227;
+            let discount = 0;
+            let discountText = '';
+            
+            // Apply discounts
+            if (nights >= 28) {
+                discount = 0.15;
+                discountText = '15% off for monthly stays (28+ nights)';
+            } else if (nights >= 7) {
+                discount = 0.07;
+                discountText = '7% off for weekly stays (7+ nights)';
+            }
+            
+            const discountAmount = totalPrice * discount;
+            const finalPrice = totalPrice - discountAmount;
+            
+            dateDisplay.innerHTML = `
+                <span>${startDate.toLocaleDateString()} → ${endDate.toLocaleDateString()}</span>
+                <i class="fas fa-chevron-right"></i>
+            `;
+            
+            // Update the total section in sidebar
+            const totalSection = document.querySelector('.total-section');
+            if (totalSection) {
+                totalSection.innerHTML = `
+                    <div class="total-header">
+                        <h4>Total</h4>
+                        <span class="view-details">View details <i class="fas fa-chevron-right"></i></span>
+                    </div>
+                    <div class="total-amount" id="totalAmount">$${finalPrice.toFixed(2)}</div>
+                    ${discount > 0 ? `
+                        <div class="discount-highlight">
+                            <div class="discount-text">${discountText}</div>
+                            <div>Discount: -$${discountAmount.toFixed(2)}</div>
+                        </div>
+                    ` : ''}
+                `;
+            }
+            
+            // Update the main booking summary
+            const checkinEl = document.getElementById('checkinDate');
+            const checkoutEl = document.getElementById('checkoutDate');
+            const totalEl = document.getElementById('totalPrice');
+            
+            if (checkinEl) checkinEl.textContent = startDate.toLocaleDateString();
+            if (checkoutEl) checkoutEl.textContent = endDate.toLocaleDateString();
+            if (totalEl) totalEl.textContent = `$${finalPrice.toFixed(2)}`;
+            
+            // Update the modal booking summary
+            const modalCheckIn = document.getElementById('modalCheckIn');
+            const modalCheckOut = document.getElementById('modalCheckOut');
+            const modalTotal = document.getElementById('modalTotal');
+            
+            if (modalCheckIn) modalCheckIn.textContent = startDate.toLocaleDateString();
+            if (modalCheckOut) modalCheckOut.textContent = endDate.toLocaleDateString();
+            if (modalTotal) modalTotal.textContent = `$${finalPrice.toFixed(2)}`;
+        } else if (startDate && !endDate) {
+            // Partial selection - show start date and prompt for end date
+            dateDisplay.innerHTML = `
+                <span>${startDate.toLocaleDateString()} → Select end date</span>
+                <i class="fas fa-chevron-right"></i>
+            `;
+            
+            // Update the total section to show prompt
+            const totalSection = document.querySelector('.total-section');
+            if (totalSection) {
+                totalSection.innerHTML = `
+                    <div class="total-header">
+                        <h4>Select End Date</h4>
+                    </div>
+                    <div class="total-amount" id="totalAmount" style="color: #4a7c59; font-size: 0.9rem;">
+                        Choose your checkout date to see pricing
+                    </div>
+                `;
+            }
+        } else {
+            // No selection
+            dateDisplay.innerHTML = `
+                <span>Select your dates</span>
+                <i class="fas fa-chevron-right"></i>
+            `;
+            
+            // Update the total section
+            const totalSection = document.querySelector('.total-section');
+            if (totalSection) {
+                totalSection.innerHTML = `
+                    <div class="total-header">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="total-amount" id="totalAmount">$0.00</div>
+                `;
+            }
+        }
     }
-    
-    // Update the total section in sidebar
-    const totalSection = document.querySelector('.total-section');
-    if (totalSection) {
-        totalSection.innerHTML = `
-            <div class="total-header">
-                <h4>Total</h4>
-                <span class="view-details">View details <i class="fas fa-chevron-right"></i></span>
-            </div>
-            <div class="total-amount" id="totalAmount">$${finalPrice.toFixed(2)}</div>
-            ${discount > 0 ? `
-                <div class="discount-highlight">
-                    <div class="discount-text">${discountText}</div>
-                    <div>Discount: -$${discountAmount.toFixed(2)}</div>
-                </div>
-            ` : ''}
-        `;
-    }
-    
-    // Update the main booking summary
-    const checkinEl = document.getElementById('checkinDate');
-    const checkoutEl = document.getElementById('checkoutDate');
-    const totalEl = document.getElementById('totalPrice');
-    
-    if (checkinEl) checkinEl.textContent = startDate.toLocaleDateString();
-    if (checkoutEl) checkoutEl.textContent = endDate.toLocaleDateString();
-    if (totalEl) totalEl.textContent = `$${finalPrice.toFixed(2)}`;
-    
-    // Update the modal booking summary
-    const modalCheckIn = document.getElementById('modalCheckIn');
-    const modalCheckOut = document.getElementById('modalCheckOut');
-    const modalTotal = document.getElementById('modalTotal');
-    
-    if (modalCheckIn) modalCheckIn.textContent = startDate.toLocaleDateString();
-    if (modalCheckOut) modalCheckOut.textContent = endDate.toLocaleDateString();
-    if (modalTotal) modalTotal.textContent = `$${finalPrice.toFixed(2)}`;
 }
 
 function previousMonth() {
@@ -1249,6 +1253,8 @@ function previousMonth() {
         currentYear--;
     }
     generateDualCalendar();
+    // Preserve selection state after navigation
+    showMobileSelectionIndicator();
 }
 
 function nextMonth() {
@@ -1258,6 +1264,8 @@ function nextMonth() {
         currentYear++;
     }
     generateDualCalendar();
+    // Preserve selection state after navigation
+    showMobileSelectionIndicator();
 }
 
 // Initialize calendar sync on page load
@@ -1336,20 +1344,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Close modal when clicking outside
-window.addEventListener('click', function(event) {
-    if (event.target === modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-});
-
-// Close modal on escape key
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape' && modal.style.display === 'block') {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-});
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
     
     // Map is now interactive via Google Maps iframe
     // No additional JavaScript needed as the iframe handles all interactions
