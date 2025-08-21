@@ -2657,14 +2657,6 @@ body {
 
 /* Mobile Optimization - DO NOT change any existing desktop styles */
 @media (max-width: 768px) {
-    /* Fix grey background edge - extend to screen edges */
-    .main-container {
-        padding: 3rem 0 !important;
-        border-radius: 0 !important;
-        margin: 0 !important;
-        max-width: 100% !important;
-    }
-    
     /* Stack layout vertically on mobile */
     .content-section .container {
         grid-template-columns: 1fr !important;
@@ -2677,12 +2669,6 @@ body {
         padding: 0 1rem !important;
     }
     
-    /* Prevent header text stacking */
-    .nav-logo {
-        white-space: nowrap !important;
-        font-size: 1.2rem !important;
-    }
-    
     .nav-links {
         display: none !important;
     }
@@ -2691,16 +2677,47 @@ body {
         display: none !important;
     }
     
-    /* Mobile image gallery */
+    /* Mobile nav-logo - keep text on one line */
+    .nav-logo {
+        font-size: 1.2rem !important;
+        white-space: nowrap !important;
+    }
+    
+    /* Mobile main container - full width gray background */
+    .main-container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 2rem 1rem !important;
+        border-radius: 0 !important;
+    }
+    
+    /* Mobile image gallery - make it bigger */
     .image-gallery {
-        height: 250px !important;
+        height: 350px !important;
         border-radius: 12px !important;
     }
     
-    /* Mobile map container - match image height */
+    /* Mobile main image container - stack vertically */
+    .main-image-container {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    
+    /* Mobile main image - make it bigger */
+    .main-image {
+        height: 350px !important;
+    }
+    
+    /* Mobile image carousel - add spacing */
+    .thumbnail-carousel {
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Mobile map container - shorter and wider, positioned below carousel */
     .map-container {
-        height: 250px !important;
+        height: 180px !important;
         border-radius: 12px !important;
+        margin-top: 1rem !important;
     }
     
     /* Mobile typography */
@@ -2787,11 +2804,6 @@ body {
     /* Extra small mobile adjustments */
     .container {
         padding: 0 0.75rem !important;
-    }
-    
-    /* Ensure grey background extends to edges on very small screens */
-    .main-container {
-        padding: 2rem 0 !important;
     }
     
     .luxury-title {
