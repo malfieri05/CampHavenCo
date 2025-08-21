@@ -84,6 +84,38 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
     });
 });
 
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
+});
+
+// Prevent body scroll when mobile menu is open
+function toggleBodyScroll(disable) {
+    if (disable) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Update mobile menu behavior
+hamburger.addEventListener('click', () => {
+    const isActive = hamburger.classList.contains('active');
+    toggleBodyScroll(isActive);
+});
+
+// Close mobile menu on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        toggleBodyScroll(false);
+    }
+});
+
 // Calendar sync functionality
 const CALENDAR_URLS = {
     outdoorsy: 'https://api.outdoorsy.com/v0/ics-export.ics?rental_id=443126&t=8edf7d71-6cc3-43e2-8d46-82deb22e3307',
@@ -251,6 +283,15 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Center the clicked thumbnail
             centerActiveThumbnail();
+        });
+        
+        // Add touch feedback for mobile
+        thumbnail.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        thumbnail.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
         });
     });
     
@@ -717,6 +758,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         prevBtn.addEventListener('click', prevSlide);
         nextBtn.addEventListener('click', nextSlide);
         
+        // Touch/swipe support for mobile
+        let startX = 0;
+        let endX = 0;
+        
+        const featuresContainer = document.querySelector('.features-container');
+        if (featuresContainer) {
+            featuresContainer.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            });
+            
+            featuresContainer.addEventListener('touchend', (e) => {
+                endX = e.changedTouches[0].clientX;
+                handleSwipe();
+            });
+        }
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = startX - endX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide(); // Swipe left
+                } else {
+                    prevSlide(); // Swipe right
+                }
+            }
+        }
+        
         // Dot navigation
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
@@ -766,6 +836,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Event listeners
         amenitiesPrevBtn.addEventListener('click', prevAmenitySlide);
         amenitiesNextBtn.addEventListener('click', nextAmenitySlide);
+        
+        // Touch/swipe support for amenities carousel
+        let amenitiesStartX = 0;
+        let amenitiesEndX = 0;
+        
+        const amenitiesContainer = document.querySelector('.amenities-container');
+        if (amenitiesContainer) {
+            amenitiesContainer.addEventListener('touchstart', (e) => {
+                amenitiesStartX = e.touches[0].clientX;
+            });
+            
+            amenitiesContainer.addEventListener('touchend', (e) => {
+                amenitiesEndX = e.changedTouches[0].clientX;
+                handleAmenitiesSwipe();
+            });
+        }
+        
+        function handleAmenitiesSwipe() {
+            const swipeThreshold = 50;
+            const diff = amenitiesStartX - amenitiesEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextAmenitySlide(); // Swipe left
+                } else {
+                    prevAmenitySlide(); // Swipe right
+                }
+            }
+        }
         
         // Dot navigation
         amenitiesDots.forEach((dot, index) => {
@@ -1132,6 +1231,15 @@ function updateBookingSummary() {
     if (checkinEl) checkinEl.textContent = startDate.toLocaleDateString();
     if (checkoutEl) checkoutEl.textContent = endDate.toLocaleDateString();
     if (totalEl) totalEl.textContent = `$${finalPrice.toFixed(2)}`;
+    
+    // Update the modal booking summary
+    const modalCheckIn = document.getElementById('modalCheckIn');
+    const modalCheckOut = document.getElementById('modalCheckOut');
+    const modalTotal = document.getElementById('modalTotal');
+    
+    if (modalCheckIn) modalCheckIn.textContent = startDate.toLocaleDateString();
+    if (modalCheckOut) modalCheckOut.textContent = endDate.toLocaleDateString();
+    if (modalTotal) modalTotal.textContent = `$${finalPrice.toFixed(2)}`;
 }
 
 function previousMonth() {
@@ -1179,11 +1287,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('bookingModal');
     const modalBtn = document.getElementById('instantBookBtn');
     const modalClose = document.getElementById('modalClose');
-    const modalSelectedDates = document.getElementById('modalSelectedDates');
     
     // Open modal
     modalBtn.addEventListener('click', function() {
-        // Update selected dates in modal
+        // Update modal with selected dates and total
         if (startDate && endDate) {
             const nights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
             let totalPrice = nights * 227;
@@ -1199,9 +1306,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const discountAmount = totalPrice * discount;
             const finalPrice = totalPrice - discountAmount;
             
-            modalSelectedDates.textContent = `${startDate.toLocaleDateString()} → ${endDate.toLocaleDateString()} (${nights} nights - $${finalPrice.toFixed(2)})`;
+            // Update modal fields
+            const modalCheckIn = document.getElementById('modalCheckIn');
+            const modalCheckOut = document.getElementById('modalCheckOut');
+            const modalTotal = document.getElementById('modalTotal');
+            
+            if (modalCheckIn) modalCheckIn.textContent = startDate.toLocaleDateString();
+            if (modalCheckOut) modalCheckOut.textContent = endDate.toLocaleDateString();
+            if (modalTotal) modalTotal.textContent = `$${finalPrice.toFixed(2)}`;
         } else {
-            modalSelectedDates.textContent = 'Please select your dates first';
+            // Show message if no dates selected
+            const modalCheckIn = document.getElementById('modalCheckIn');
+            const modalCheckOut = document.getElementById('modalCheckOut');
+            const modalTotal = document.getElementById('modalTotal');
+            
+            if (modalCheckIn) modalCheckIn.textContent = 'Please select dates first';
+            if (modalCheckOut) modalCheckOut.textContent = 'Please select dates first';
+            if (modalTotal) modalTotal.textContent = '$0.00';
         }
         
         modal.style.display = 'block';
@@ -1215,18 +1336,147 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+});
+
+// Close modal on escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && modal.style.display === 'block') {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+});
+    
+    // Map is now interactive via Google Maps iframe
+    // No additional JavaScript needed as the iframe handles all interactions
+    
+    // Smooth scrolling for navigation links
+    const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                const headerHeight = 80; // Height of the fixed header
+                const targetPosition = targetElement.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
     
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && modal.style.display === 'block') {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    });
+    // Date display click to scroll to availability section
+    const dateDisplay = document.getElementById('dateDisplay');
+    if (dateDisplay) {
+        dateDisplay.addEventListener('click', function() {
+            const availabilitySection = document.getElementById('booking');
+            if (availabilitySection) {
+                const headerHeight = 80; // Height of the fixed header
+                const targetPosition = availabilitySection.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
+    
+    // Form submission functionality
+    const bookingForm = document.getElementById('bookingForm');
+    const formSuccess = document.getElementById('formSuccess');
+    const formError = document.getElementById('formError');
+    
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            console.log('Form submitted!'); // Debug log
+            
+            // Show loading state
+            const submitBtn = bookingForm.querySelector('.confirm-booking-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            submitBtn.disabled = true;
+            
+            // Hide any previous messages
+            formSuccess.style.display = 'none';
+            formError.style.display = 'none';
+            
+            try {
+                // Get form data
+                const formData = new FormData(bookingForm);
+                const bookingData = {
+                    firstName: formData.get('firstName'),
+                    lastName: formData.get('lastName'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    specialRequests: formData.get('specialRequests') || '',
+                    checkIn: startDate ? startDate.toLocaleDateString() : 'No dates selected',
+                    checkOut: endDate ? endDate.toLocaleDateString() : 'No dates selected',
+                    total: document.getElementById('modalTotal').textContent,
+                    selectedDates: startDate && endDate ? 
+                        `${startDate.toLocaleDateString()} → ${endDate.toLocaleDateString()}` : 
+                        'No dates selected'
+                };
+                
+                console.log('Booking data:', bookingData); // Debug log
+                
+                                        // Google Apps Script web app URL
+                        const scriptUrl = 'https://script.google.com/macros/s/AKfycbzznaZ4jOwoVfF6eoz2jtDyED86NTdEc3ALBqgQkcBr_852lHu5cdDLDK-qcHn5oB-ItQ/exec'; // Latest URL with owner notifications
+                
+                console.log('Sending request to:', scriptUrl); // Debug log
+                
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    mode: 'no-cors', // Add this to handle CORS issues
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+                
+                console.log('Response received:', response); // Debug log
+                
+                // Since we're using no-cors, we can't read the response
+                // We'll assume success if we get here
+                console.log('Request sent successfully!');
+                
+                // Show success message
+                bookingForm.style.display = 'none';
+                formSuccess.style.display = 'block';
+                
+                // Reset form
+                bookingForm.reset();
+                
+                // Close modal after 3 seconds
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    bookingForm.style.display = 'flex';
+                    formSuccess.style.display = 'none';
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Form submission error:', error);
+                
+                // Show error message
+                formError.style.display = 'block';
+                
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
 });
