@@ -2445,19 +2445,21 @@ body {
         height: 35px;
     }
     
-    /* Main Content - Improved Layout */
+    /* Main Content - Mobile Optimized Layout */
     .main-container {
         grid-template-columns: 1fr;
-        padding: 1.5rem 1rem;
-        gap: 2rem;
+        padding: 1rem;
+        gap: 1.5rem;
         margin: 0 auto;
         max-width: 100%;
-        border-radius: 12px;
+        border-radius: 0;
+        background: white;
     }
     
     .content-left {
         padding-right: 0;
         text-align: center;
+        order: 2;
     }
     
     .listing-title {
@@ -2474,12 +2476,13 @@ body {
         margin-bottom: 1.5rem;
     }
     
-    /* Image Gallery - Improved Symmetry */
+    /* Image Gallery - Mobile Optimized */
     .main-image-container {
         grid-template-columns: 1fr;
         gap: 1rem;
-        padding: 0 1rem;
-        margin: 0 auto 1.5rem auto;
+        padding: 0;
+        margin: 0 0 1.5rem 0;
+        order: 1;
     }
     
     .main-image {
@@ -2487,14 +2490,15 @@ body {
         border-radius: 12px;
         margin: 0 auto;
         width: 100%;
-        max-width: 600px;
+        max-width: 100%;
     }
     
     .map-container {
         height: 250px;
         margin: 1rem auto;
         width: 100%;
-        max-width: 600px;
+        max-width: 100%;
+        order: 2;
     }
     
     .map-title {
@@ -2505,7 +2509,8 @@ body {
     .thumbnail-carousel {
         padding: 0 1rem;
         margin: 1.5rem auto;
-        max-width: 600px;
+        max-width: 100%;
+        order: 3;
     }
     
     .thumbnail {
@@ -2523,11 +2528,12 @@ body {
         font-size: 0.8rem;
     }
     
-    /* Features & Amenities - Improved Layout */
+    /* Features & Amenities - Mobile Optimized */
     .features-section,
     .amenities-section {
         text-align: center;
         margin-bottom: 2rem;
+        order: 4;
     }
     
     .features-section h3,
@@ -2541,7 +2547,7 @@ body {
     .amenities-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
-        max-width: 500px;
+        max-width: 100%;
         margin: 0 auto;
     }
     
@@ -2556,7 +2562,7 @@ body {
     .features-carousel,
     .amenities-carousel {
         gap: 0.75rem;
-        max-width: 500px;
+        max-width: 100%;
         margin: 0 auto;
     }
     
@@ -2572,44 +2578,46 @@ body {
     }
     
     .features-dots,
-.amenities-dots {
-    text-align: center;
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.features-dots .dot,
-.amenities-dots .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #e0e0e0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.features-dots .dot.active,
-.amenities-dots .dot.active {
-    background: #4a7c59;
-    transform: scale(1.2);
-}
+    .amenities-dots {
+        text-align: center;
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+    }
     
-    /* Booking Section - Improved Centering */
+    .features-dots .dot,
+    .amenities-dots .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .features-dots .dot.active,
+    .amenities-dots .dot.active {
+        background: #4a7c59;
+        transform: scale(1.2);
+    }
+    
+    /* Booking Section - Mobile Optimized */
     .booking-sidebar {
         position: static;
-        order: -1;
+        order: 1;
         margin-bottom: 2rem;
-        max-width: 500px;
+        max-width: 100%;
         margin-left: auto;
         margin-right: auto;
+        width: 100%;
     }
     
     .booking-card {
         padding: 1.5rem;
         border-radius: 12px;
         text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     
     .price {
@@ -2627,16 +2635,17 @@ body {
     
     .instant-book-btn {
         width: 100%;
-        max-width: 300px;
+        max-width: 100%;
         margin: 0 auto;
         display: block;
     }
     
-    /* Calendar - Improved Layout */
+    /* Calendar - Mobile Optimized with Vertical Stack */
     .calendar-container {
         padding: 1rem;
-        max-width: 500px;
+        max-width: 100%;
         margin: 0 auto;
+        order: 5;
     }
     
     .calendar-header {
@@ -2644,40 +2653,54 @@ body {
         gap: 1rem;
         align-items: center;
         text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .month-calendar .calendar-header {
+        margin-bottom: 1rem;
+    }
+    
+    .month-calendar .calendar-header h3 {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+    
+    /* Stack calendars vertically on mobile */
+    .dual-calendar {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+    }
+    
+    .month-calendar {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
     }
     
     .calendar-grid {
         gap: 0.5rem;
         justify-content: center;
+        grid-template-columns: repeat(7, 1fr);
     }
     
     .calendar-day {
-        height: 40px;
+        height: 45px;
         font-size: 0.9rem;
         display: flex;
         align-items: center;
         justify-content: center;
+        border-radius: 8px;
     }
     
-    /* Footer - Improved Centering */
-    .footer {
-        padding: 2rem 1rem;
-        text-align: center;
-    }
-    
-    .footer-content {
-        flex-direction: column;
-        gap: 1.5rem;
-        align-items: center;
-    }
-    
-    /* Key Features - Improved Layout */
+    /* Key Features - Mobile Optimized */
     .key-features {
         display: flex;
         flex-direction: column;
         gap: 1rem;
         align-items: center;
         margin: 1.5rem 0;
+        order: 3;
     }
     
     .key-features .feature {
@@ -2686,6 +2709,32 @@ body {
         gap: 0.5rem;
         justify-content: center;
         text-align: center;
+        padding: 0.5rem 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    /* Footer - Mobile Optimized */
+    .footer {
+        padding: 2rem 1rem;
+        text-align: center;
+        margin-top: 2rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+    }
+    
+    /* Breadcrumbs - Mobile Optimized */
+    .breadcrumbs {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        order: 2;
     }
 }
 
@@ -2703,15 +2752,17 @@ body {
         height: 30px;
     }
     
-    /* Main Content - Enhanced Small Mobile Layout */
+    /* Main Content - Ultra Mobile Optimized */
     .main-container {
-        padding: 1rem 0.75rem;
-        gap: 1.5rem;
-        border-radius: 8px;
+        padding: 0.75rem;
+        gap: 1rem;
+        border-radius: 0;
+        background: white;
     }
     
     .content-left {
         text-align: center;
+        order: 2;
     }
     
     .listing-title {
@@ -2726,10 +2777,12 @@ body {
         margin-bottom: 1rem;
     }
     
-    /* Image Gallery - Enhanced Small Mobile */
+    /* Image Gallery - Ultra Mobile Optimized */
     .main-image-container {
-        padding: 0 0.5rem;
+        padding: 0;
         gap: 0.75rem;
+        margin: 0 0 1rem 0;
+        order: 1;
     }
     
     .main-image {
@@ -2741,6 +2794,7 @@ body {
     .map-container {
         height: 200px;
         max-width: 100%;
+        order: 2;
     }
     
     .map-title {
@@ -2751,6 +2805,7 @@ body {
     .thumbnail-carousel {
         padding: 0 0.5rem;
         margin: 1rem auto;
+        order: 3;
     }
     
     .thumbnail {
@@ -2764,10 +2819,11 @@ body {
         height: 28px;
     }
     
-    /* Features & Amenities - Enhanced Small Mobile */
+    /* Features & Amenities - Ultra Mobile Optimized */
     .features-section,
     .amenities-section {
         margin-bottom: 1.5rem;
+        order: 4;
     }
     
     .features-section h3,
@@ -2827,16 +2883,19 @@ body {
         height: 30px;
     }
     
-    /* Booking - Enhanced Small Mobile */
+    /* Booking - Ultra Mobile Optimized */
     .booking-sidebar {
         max-width: 100%;
         margin: 0 auto 1.5rem auto;
+        order: 1;
+        width: 100%;
     }
     
     .booking-card {
         padding: 1rem;
         border-radius: 8px;
         text-align: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     
     .price {
@@ -2852,39 +2911,70 @@ body {
         padding: 0.75rem 1.5rem;
         font-size: 1rem;
         width: 100%;
-        max-width: 250px;
+        max-width: 100%;
     }
     
-    /* Calendar - Enhanced Small Mobile */
+    /* Calendar - Ultra Mobile Optimized with Vertical Stack */
     .calendar-container {
         padding: 0.75rem;
         max-width: 100%;
+        order: 5;
     }
     
     .calendar-header {
         gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    .month-calendar .calendar-header {
+        margin-bottom: 0.75rem;
+    }
+    
+    .month-calendar .calendar-header h3 {
+        font-size: 1.1rem;
+        margin: 0;
+    }
+    
+    /* Stack calendars vertically on ultra mobile */
+    .dual-calendar {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+    }
+    
+    .month-calendar {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
     }
     
     .calendar-day {
-        height: 35px;
+        height: 40px;
         font-size: 0.85rem;
         display: flex;
         align-items: center;
         justify-content: center;
+        border-radius: 6px;
     }
     
-    /* Key Features - Enhanced Small Mobile */
+    /* Key Features - Ultra Mobile Optimized */
     .key-features {
         gap: 0.75rem;
         margin: 1rem 0;
+        order: 3;
     }
     
     .key-features .feature {
         gap: 0.4rem;
         font-size: 0.9rem;
+        padding: 0.4rem 0.75rem;
+        background: #f8f9fa;
+        border-radius: 6px;
+        width: 100%;
+        max-width: 280px;
     }
     
-    /* Modal - Enhanced Small Mobile */
+    /* Modal - Ultra Mobile Optimized */
     .modal-content {
         margin: 0.5rem;
         padding: 1.25rem;
@@ -2915,14 +3005,23 @@ body {
         width: 100%;
     }
     
-    /* Footer - Enhanced Small Mobile */
+    /* Footer - Ultra Mobile Optimized */
     .footer {
         padding: 1.5rem 0.75rem;
         text-align: center;
+        margin-top: 1.5rem;
     }
     
     .footer-content {
         gap: 1rem;
+    }
+    
+    /* Breadcrumbs - Ultra Mobile Optimized */
+    .breadcrumbs {
+        font-size: 0.85rem;
+        margin-bottom: 0.75rem;
+        text-align: center;
+        order: 2;
     }
 }
 
