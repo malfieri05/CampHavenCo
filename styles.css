@@ -2662,6 +2662,41 @@ body {
     display: none;
 }
 
+/* Mobile Fixed Phone Number */
+.mobile-fixed-phone {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #4a7c59;
+    color: white;
+    padding: 12px 16px;
+    text-align: center;
+    z-index: 1001;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-bottom: 2px solid #3d6a4a;
+}
+
+.mobile-fixed-phone a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.mobile-fixed-phone i {
+    font-size: 1.1rem;
+}
+
+.mobile-fixed-phone:hover {
+    background: #3d6a4a;
+}
+
 @media (max-width: 768px) {
     /* Full width container on mobile */
     .container {
@@ -2809,6 +2844,21 @@ body {
     .mobile-map-section {
         display: block !important;
         margin-top: 2rem !important;
+    }
+    
+    /* Show mobile fixed phone number */
+    .mobile-fixed-phone {
+        display: block !important;
+    }
+    
+    /* Adjust header to account for fixed phone bar */
+    .navbar {
+        top: 48px !important;
+    }
+    
+    /* Adjust main content to account for fixed phone bar */
+    .image-gallery-section {
+        margin-top: 128px !important;
     }
     
     /* 1. Fix Container Overflow and Centering */
