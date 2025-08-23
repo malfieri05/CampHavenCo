@@ -491,6 +491,8 @@ body {
     transition: all 0.3s ease;
     border: 2px solid transparent;
     flex-shrink: 0;
+    /* Prevent layout shifts */
+    aspect-ratio: 3/2;
 }
 
 .thumbnail.active {
