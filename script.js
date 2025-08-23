@@ -206,6 +206,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function initCarousel() {
         updateArrowStates();
         centerActiveThumbnail();
+        
+        // Set initial CSS variable for blur effect
+        const activeThumbnail = document.querySelector('.thumbnail.active');
+        if (activeThumbnail && mainImage) {
+            const mainImageContainer = mainImage.closest('.main-image');
+            if (mainImageContainer) {
+                mainImageContainer.style.setProperty('--current-image', `url('${activeThumbnail.dataset.src}')`);
+            }
+        }
     }
     
     // Update arrow states
@@ -262,6 +271,12 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Update main image
             mainImage.src = thumbnail.dataset.src;
+            
+            // Update CSS variable for blur effect
+            const mainImageContainer = mainImage.closest('.main-image');
+            if (mainImageContainer) {
+                mainImageContainer.style.setProperty('--current-image', `url('${thumbnail.dataset.src}')`);
+            }
             
             // Center the clicked thumbnail
             centerActiveThumbnail();
